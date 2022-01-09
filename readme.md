@@ -1,4 +1,4 @@
-**Software University Course - JS Back-End**
+# Software University Course - JS Back-End #
 
 This is the work I have did in the course **JS Back-End** in January 2022.
 
