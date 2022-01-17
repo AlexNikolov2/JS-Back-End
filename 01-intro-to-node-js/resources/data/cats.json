@@ -1,0 +1,18 @@
+[
+  [
+    {
+      "id": "8fc43293-8f4e-437e-bfa2-01eff5bb3539",
+      "name": "Faruk",
+      "description": "Cat",
+      "breed": "Persian",
+      "image": "Cute-Persian-Kitten-1024x682.jpg"
+    },
+    {
+      "id": "ac759497-ceef-491f-add8-50ff511c4a13",
+      "name": "Djamaikata",
+      "description": "Cat",
+      "breed": "Unknown",
+      "image": "hitlercat.jpg"
+    }
+  ]
+]
