@@ -1,7 +1,7 @@
 const express = require('express');
 const hbs = require('express-handlebars');
 
-const cubeService = require('./services/cube');
+const cubesService = require('./services/cubes');
 
 const {home} = require('./controllers/home');
 const {about} = require('./controllers/about');
@@ -18,7 +18,7 @@ app.set('view engine', 'hbs');
 
 app.use(express.urlencoded({extended: true}));
 app.use('/static/', express.static('static'));
-app.use(cubeService());
+app.use(cubesService());
 
 app.get('/', home);
 app.get('/about', about);

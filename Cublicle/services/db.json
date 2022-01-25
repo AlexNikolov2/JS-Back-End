@@ -1,0 +1,20 @@
+{
+    "2f8ef455-c009": {
+      "name": "BMW M3 GTR",
+      "description": "Od Most Wanted najopasniot mi ga podari za rodenden na sinot mi Jargim od Zlatna Panega. 381 000 km, 500 4erni kon4eta, ruchna. Bega mnogo od kukite, i kukite begat od neja.",
+      "imageUrl": "m3gtr.jpg",
+      "difficultry": 3
+    },
+    "6476da65-f254": {
+      "name": "Chevrolet Camaro SS 1968",
+      "description": "Chernoto Camaro Mnogo E Opasno, as the great Aleks once said. 227 000 km. Automatic Transmission, 490 hp diesel TDI engine. Only for VERY DANGEROUS people.",
+      "imageUrl": "camaro-ss.jpg",
+      "difficultry": 2
+    },
+    "3ba2d888-1ce4": {
+      "name": "Ford Fiesta 1.25 Zetec-S 1997",
+      "description": "TATE NEMA DA SI KUPA TAKOV TARALQSNIK CHU LI",
+      "imageUrl": "fiesta.jpg",
+      "difficultry": 6.9
+    }
+}

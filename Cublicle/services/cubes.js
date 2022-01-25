@@ -24,7 +24,7 @@ async function write(){
     }
 }
 
-async function getAll(){
+async function getAll(query){
     const data = await read();
     let cubes = Object.entries(data).map(([id, v]) => Object.assign({}, {id}, v));
 
