@@ -14,3 +14,5 @@ connection.connect((err, result) => {
 
     console.log("Bravo ue tragna");
 })
+
+//was watching the video
