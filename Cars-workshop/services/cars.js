@@ -1,5 +1,6 @@
 const fs = require('fs/promises');
 const filePath = './services/data.json';
+const Car = require('../models/Car');
 
 async function read(){
     try{
@@ -25,7 +26,9 @@ async function write(){
 }
 
 async function getAll(query){
-    const data = await read();
+    const cars = await Car.find({});
+    return cars;
+    /*const data = await read();
     let cars = Object.entries(data).map(([id, v]) => Object.assign({}, { id }, v));
 
     if(query.search) {
@@ -38,7 +41,7 @@ async function getAll(query){
         cars = cars.filter(c => c.price <= Number(query.to));
     }
 
-    return cars;
+    return cars;*/
 }
 
 async function getById(id){
