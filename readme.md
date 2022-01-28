@@ -8,7 +8,7 @@ The Topics are as they follow:
 * - [x] Node.js Streams and Utilities
 * - [x] Express.js and templating
 * - [x] Workshop: Express.js and templating
-* - [ ] MongoDB and Mongoose
+* - [x] MongoDB and Mongoose
 * - [ ] Workshop: MongoDB and Mongoose
 * - [ ] Session and Authentication
 * - [ ] Workshop: Session and Authentication
