@@ -1,6 +1,8 @@
 const express = require('express');
 const hbs = require('express-handlebars');
 
+const initDb = require('./models/index');
+
 const carsService = require('./services/cars');
 
 const {home} = require('./controllers/home');
@@ -12,6 +14,9 @@ const deleteCar = require('./controllers/delete');
 const {notFound} = require('./controllers/404');
 
 const app = express();
+async function start(){
+    await initDb();
+
 
 app.engine('hbs', hbs.create({
     extname: 'hbs',
@@ -41,3 +46,4 @@ app.route('/edit/:id')
 app.all('*', notFound);
 
 app.listen(3000, () => console.log('Server started on port 3000\nNema zadna has mo karesh'));
+}
