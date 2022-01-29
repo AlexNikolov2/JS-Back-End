@@ -1,12 +1,15 @@
 const http = require('http');
+const { catalogController, createController, deleteController } = require('./controllers/catalog');
+const { homeController, aboutController } = require('./controllers/home');
 
-const server = http.createServer((request, response) => {
-   console.log('request received!'); 
+const router = require('./router');
 
-   console.log(request);
-   response.write("Hello World!");
-   response.end();
-});
+const server = http.createServer(router.main);
+
+router.get('/', homeController);
+router.get('/about', aboutController);
+router.get('/catalog', catalogController);
+router.post('/create', createController);
+router.get('/delete', deleteController);
+
 server.listen(3000);
-
-//I was watching most of the time lol
