@@ -1,4 +1,4 @@
-const Accesory = require('../models/Accesory');
+const Accesory = require('../models/Accessory');
 const accesoryViewModel = require('./util');
 
 async function getAll(){
