@@ -1,19 +1,19 @@
-const Accesory = require('../models/Accessory');
-const accesoryViewModel = require('./util');
+const Accessory = require('../models/Accessory');
+const { accessoryViewModel } = require('./util');
 
-async function getAll(){
-    const accesories = await Accesory.find();
-    return accesories.map(accesoryViewModel);
+async function getAll() {
+    const data = await Accessory.find({});
+    return data.map(accessoryViewModel);
 }
 
-async function createAccesory(accesory){
-    await Accesory.create(accesory);
+async function createAccessory(accessory) {
+    await Accessory.create(accessory);
 }
 
 module.exports = () => (req, res, next) => {
-    req.accesory = {
+    req.accessory = {
         getAll,
-        createAccesory
+        createAccessory
     };
     next();
-}
+};

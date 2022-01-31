@@ -1,12 +1,13 @@
-const {Schema, model, Types: {ObjectId}} = require('mongoose');
+const { Schema, model, Types: { ObjectId } } = require('mongoose');
+
 
 const carSchema = new Schema({
-    name: {type: String, required: true},
-    description: {type: String, required: true},
-    imageUrl: {type: String},
-    price: {type: Number, required: true},
-    accesories: [{type: [ObjectId], default: [], ref: 'Accessory'}]
-})
+    name: { type: String, required: true, minlength: 3 },
+    description: { type: String, default: '' },
+    imageUrl: { type: String, default: 'noImage.jpg' },
+    price: { type: Number, required: true, min: 0 },
+    accessories: { type: [ObjectId], default: [], ref: 'Accessory' }
+});
 
 const Car = model('Car', carSchema);
 

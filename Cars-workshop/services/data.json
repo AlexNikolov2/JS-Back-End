@@ -15,6 +15,12 @@
       "name": "Ford Fiesta 1.25 Zetec-S 1997",
       "description": "TATE NEMA DA SI KUPA TAKOV TARALQSNIK CHU LI",
       "imageUrl": "fiesta.jpg",
-      "price": "10 leva"
+      "price": 0
+    },
+    "a0cc9674-a2b6": {
+      "name": "Merkava III",
+      "description": "Kato go vidis, begaj oti puca mnogu po palestinski govna kako tebe",
+      "imageUrl": "merkava.jpg",
+      "price": "50 hilqdi palestinci"
     }
 }

@@ -1,8 +1,10 @@
 const Car = require('../models/Car');
 const { carViewModel } = require('./util');
 
+
 async function getAll(query) {
     const options = {};
+
     if (query.search) {
         options.name = new RegExp(query.search, 'i');
     }
@@ -15,6 +17,7 @@ async function getAll(query) {
         }
         options.price.$lte = Number(query.to);
     }
+
     const cars = await Car.find(options);
     return cars.map(carViewModel);
 }
@@ -30,9 +33,8 @@ async function getById(id) {
 
 async function createCar(car) {
     const result = new Car(car);
-    await result.save(); 
+    await result.save();
 }
-
 
 async function deleteById(id) {
     await Car.findByIdAndDelete(id);
@@ -48,11 +50,11 @@ async function updateById(id, car) {
     existing.accessories = car.accessories;
 
     await existing.save();
-
 }
 
 async function attachAccessory(carId, accessoryId) {
     const existing = await Car.findById(carId);
+
     existing.accessories.push(accessoryId);
 
     await existing.save();
