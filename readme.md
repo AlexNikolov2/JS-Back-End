@@ -10,7 +10,7 @@ The Topics are as they follow:
 * - [x] Workshop: Express.js and templating
 * - [x] MongoDB and Mongoose
 * - [x] Workshop: MongoDB and Mongoose
-* - [ ] Session and Authentication
+* - [x] Session and Authentication
 * - [ ] Workshop: Session and Authentication
 * - [ ] Validation and Error Handling
 * - [ ] Workshop: REST API
