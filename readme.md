@@ -11,7 +11,7 @@ The Topics are as they follow:
 * - [x] MongoDB and Mongoose
 * - [x] Workshop: MongoDB and Mongoose
 * - [x] Session and Authentication
-* - [ ] Workshop: Session and Authentication
+* - [x] Workshop: Session and Authentication
 * - [ ] Validation and Error Handling
 * - [ ] Workshop: REST API
 
