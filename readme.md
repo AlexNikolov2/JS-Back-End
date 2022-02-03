@@ -14,3 +14,12 @@ The Topics are as they follow:
 * - [ ] Workshop: Session and Authentication
 * - [ ] Validation and Error Handling
 * - [ ] Workshop: REST API
+
+Exam preparations solved:
+
+* - [ ] Wildlife Photography
+* - [ ] ShoeShelf
+* - [ ] Theaters
+* - [ ] Tutorials
+* - [ ] Shared Trip
+* - [ ] BookingUni
