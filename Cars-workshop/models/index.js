@@ -10,10 +10,10 @@ async function init(){
         await mongoose.connect(connectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        })
+        });
 
         mongoose.connection.on('error', (err) => {
-            console.error(err)
+            console.error(err);
         });
     }
     catch (err) {

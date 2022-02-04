@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types: { ObjectId } } = require('mongoose');
 
 const accessorySchema = new Schema({
     name: { type: String, required: true },
