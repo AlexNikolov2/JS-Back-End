@@ -12,7 +12,7 @@ The Topics are as they follow:
 * - [x] Workshop: MongoDB and Mongoose
 * - [x] Session and Authentication
 * - [x] Workshop: Session and Authentication
-* - [ ] Validation and Error Handling
+* - [] Validation and Error Handling
 * - [ ] Workshop: REST API
 
 Exam preparations solved:
@@ -23,3 +23,5 @@ Exam preparations solved:
 * - [ ] Tutorials
 * - [ ] Shared Trip
 * - [ ] BookingUni
+
+**Exam: 26/02/2022**
