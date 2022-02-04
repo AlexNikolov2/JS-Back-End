@@ -1,33 +1,41 @@
+
 module.exports = {
-    async get(req, res){
+    async get(req, res) {
         const id = req.params.id;
 
-        try{
-            const  [car, accessories] = await Promise.all([
+        try {
+            const [car, accessories] = await Promise.all([
                 req.storage.getById(id),
-                req.accesory.getAll()
+                req.accessory.getAll()
             ]);
 
-            const existingIDs = car.accessories.map(a => a.id.toString());
-            const filtered = accessories.filter(a => !existingIDs.includes(a.id.toString()));
+            if (car.owner != req.session.user.id) {
+                console.log('User is not owner!');
+                return res.redirect('/login');
+            }
 
-            res.render('attach', {title: 'Attach Accesory', car, accessories: filtered});
-        }
-        catch (err) {
+            const existingIds = car.accessories.map(a => a.id.toString());
+            const availableAccessories = accessories.filter(a => existingIds.includes(a.id.toString()) == false);
+
+            res.render('attach', { title: 'Attach Accessory', car, accessories: availableAccessories });
+        } catch (err) {
             res.redirect('404');
         }
     },
-    async post (req, res) {
-        const id = req.params.id;
-        const accesoryId = req.body.accesoryId;
+    async post(req, res) {
+        const carId = req.params.id;
+        const accessoryId = req.body.accessory;
 
         try {
-            await req.storage.attachAccesory(id, accesoryId);
-            res.redirect('/');
-        }
-        catch (err) {
-            console.log("Error attaching accesory" + err.message);
-            res.redirect('/attach/' + id);
+            if (await req.storage.attachAccessory(carId, accessoryId, req.session.user.id)) {
+                res.redirect('/');
+            } else {
+                res.redirect('/login');
+            }
+        } catch (err) {
+            console.log('Error creating accessory');
+            console.log(err.message);
+            res.redirect('/attach/' + carId);
         }
     }
-}
+};
