@@ -6,6 +6,8 @@ const userSchema = new Schema({
     hashedPassword: { type: String, required: true }
 });
 
+userSchema.index({ username: 1 }, { unique: true, collation: {locale: 'en', strenght: 2} });
+
 userSchema.methods.comparePassword = async function (password) {
     return await comparePassword(password, this.hashedPassword);
 };
