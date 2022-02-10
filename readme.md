@@ -1,5 +1,7 @@
 # Software University Course - JS Back-End #
 
+![js back-end](/js-back-end.jpg)
+
 This is the work I have did in the course **JS Back-End** in January 2022.
 
 The Topics are as they follow:
