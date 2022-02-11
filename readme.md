@@ -15,6 +15,8 @@ The Topics are as they follow:
 * - [x] Session and Authentication
 * - [x] Workshop: Session and Authentication
 * - [x] Validation and Error Handling
+* - [x] Exam Preparation 1
+* - [] Exam Preparation 2
 * - [ ] Workshop: REST API
 
 Exam preparations solved:

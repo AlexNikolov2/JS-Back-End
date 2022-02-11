@@ -1,7 +1,7 @@
 
 **Exam preparations solved:**
 
-* - [ ] Wildlife Photography
+* - [...] Wildlife Photography
 * - [ ] ShoeShelf
 * - [ ] Theaters
 * - [ ] Tutorials
