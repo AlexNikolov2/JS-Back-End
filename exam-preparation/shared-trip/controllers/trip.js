@@ -53,14 +53,14 @@ router.get('/:id/details', async (req, res) => {
             trip.buddiesString = trip.buddies.map(x => x.email).join(', ');
         }
         if (req.user) {
-            trip.isCreator = req.user._id == trip.creator._id;
             trip.isJoined = trip.buddies.some(x => x._id == req.user._id);
+            trip.isCreator = req.user._id == trip.creator._id;
         }
         trip.hasSeats = trip.seats > 0;
         res.render('trip/details', { title: 'Details', trip });
     } catch (error) {
         console.log(error);
-        res.render('notFound', { title: 'Error' });
+        res.render('404', { title: 'Error' });
     }
 
 });
@@ -71,7 +71,7 @@ router.get('/:id/join', isAuth(), async (req, res) => {
         res.redirect(`/trips/${req.params.id}/details`);
     } catch (error) {
         console.log(error);
-        res.render('notFound', { title: 'Error' });
+        res.render('404', { title: 'Error' });
     }
 });
 
@@ -81,7 +81,7 @@ router.get('/:id/edit', isAuth(), isCreator(), async (req, res) => {
         res.render('trip/edit', { title: 'Edit', trip });
     } catch (error) {
         console.log(error);
-        res.render('notFound', { title: 'Error' });
+        res.render('404', { title: 'Error' });
     }
 });
 
@@ -128,7 +128,7 @@ router.get('/:id/delete', isAuth(), isCreator(), async (req, res) => {
         res.redirect('/trips');
     } catch (error) {
         console.log(error);
-        res.render('notFound', { title: 'Error' });
+        res.render('404', { title: 'Error' });
     }
 });
 
