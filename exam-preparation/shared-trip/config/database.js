@@ -1,24 +1,21 @@
 const mongoose = require('mongoose');
-require('../models/User');
-const dbName = 'trips';
-const connectionString = `mongodb://localhost:27017/${dbName}`;
+const config = require('./index');
 
-module.exports = async (app) => {
-    try {
-        mongoose.connect(connectionString, {
+module.exports = () => {
+    return new Promise((resolve, reject) => {
+        mongoose.connect(config.db_connection, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useUnifiedTopology: true
         });
-        console.log('Eeee, svrzaame te so bazata');
+        const db = mongoose.connection;
 
-        mongoose.connection.on('error', (err) => {
-            console.error('Stana fal vo bazata');
-            console.error(err);
+        db.on('error', (err) => {
+            console.error('connection error: ' + err.message);
+            reject(err);
         });
-    }
-    catch (err) {
-        console.error('Ne mozavme da te svrzime so bazata');
-        console.log(err);
-        process.exit(1);
-    }
+        db.once('open', () => {
+            console.log('Svrzaame bazata!');
+            resolve();
+        });
+    });
 };

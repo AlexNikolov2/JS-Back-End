@@ -1,9 +1,9 @@
-
 const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
 const authService = require('../services/auth');
 const tripService = require('../services/trip');
+const { cookie_name } = require('../config');
 const { isGuest, isAuth } = require('../middlewares/guards');
 
 const router = Router();
@@ -35,7 +35,7 @@ router.post('/login',
             }
 
             const token = await authService.login(email, password);
-            res.cookie('user', token);
+            res.cookie(cookie_name, token);
             res.redirect('/');
         } catch (error) {
             res.render('login', { title: 'Login', errors: error.message.split('\n'), oldData: email });
@@ -70,7 +70,7 @@ router.post('/register',
 
             await authService.register(email, password, gender);
             const token = await authService.login(email, password);
-            res.cookie('user', token);
+            res.cookie(cookie_name, token);
             res.redirect('/');
         } catch (error) {
             console.log(error.message);
@@ -79,11 +79,12 @@ router.post('/register',
     });
 
 router.get('/logout', isAuth(), (req, res) => {
-    res.clearCookie('user');
+    res.clearCookie(cookie_name);
     res.redirect('/');
 });
 
-router.get('/profile', isAuth(), async (req, res) => {
+
+router.get('/:id/profile', isAuth(), async (req, res) => {
     try {
         const user = await authService.getProfile(req.params.id);
         const trips = await tripService.getTripsByCreator(req.params.id);
@@ -93,11 +94,8 @@ router.get('/profile', isAuth(), async (req, res) => {
         res.render('profile', { title: 'Profile', user });
     } catch (error) {
         console.log(error);
-        res.render('404', { title: 'Error' });
+        res.render('notFound', { title: 'Error' });
     }
 });
-
-
-
 
 module.exports = router;

@@ -46,7 +46,7 @@ router.post('/create',
         }
     });
 
-router.get('/details/:id', async (req, res) => {
+router.get('/:id/details', async (req, res) => {
     try {
         const trip = await tripService.getById(req.params.id);
         if (trip.buddies.length > 0) {
@@ -60,32 +60,32 @@ router.get('/details/:id', async (req, res) => {
         res.render('trip/details', { title: 'Details', trip });
     } catch (error) {
         console.log(error);
-        res.render('404', { title: 'Error' });
+        res.render('notFound', { title: 'Error' });
     }
 
 });
 
-router.get('/join/:id', isAuth(), async (req, res) => {
+router.get('/:id/join', isAuth(), async (req, res) => {
     try {
         const trip = await tripService.joinTrip(req.params.id, req.user._id);
         res.redirect(`/trips/${req.params.id}/details`);
     } catch (error) {
         console.log(error);
-        res.render('404', { title: 'Error' });
+        res.render('notFound', { title: 'Error' });
     }
 });
 
-router.get('/edit/:id', isAuth(), isCreator(), async (req, res) => {
+router.get('/:id/edit', isAuth(), isCreator(), async (req, res) => {
     try {
         const trip = await tripService.getById(req.params.id);
         res.render('trip/edit', { title: 'Edit', trip });
     } catch (error) {
         console.log(error);
-        res.render('404', { title: 'Error' });
+        res.render('notFound', { title: 'Error' });
     }
 });
 
-router.post('/edit/:id',
+router.post('/:id/edit',
     isAuth(),
     isCreator(),
     body('startPoint').trim().isLength({ min: 4 }).withMessage('Start point must be at least 4 characters long!'),
@@ -122,13 +122,13 @@ router.post('/edit/:id',
         }
     });
 
-router.get('/delete/:id', isAuth(), isCreator(), async (req, res) => {
+router.get('/:id/delete', isAuth(), isCreator(), async (req, res) => {
     try {
         await tripService.deleteTrip(req.params.id);
         res.redirect('/trips');
     } catch (error) {
         console.log(error);
-        res.render('404', { title: 'Error' });
+        res.render('notFound', { title: 'Error' });
     }
 });
 
