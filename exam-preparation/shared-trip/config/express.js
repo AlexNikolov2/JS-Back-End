@@ -1,4 +1,3 @@
-
 const express = require('express');
 const {create: handlebars} = require('express-handlebars');
 const cookieParser = require('cookie-parser');
