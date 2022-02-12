@@ -45,3 +45,5 @@ router.post('/create',
             res.render('trip/create', { title: 'Create', errors: error.message.split('\n'), trip: data });
         }
     });
+
+    module.exports = router;

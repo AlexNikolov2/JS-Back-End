@@ -15,3 +15,5 @@ router.get('/:id/delete', isAuth(), isCreator(), async (req, res) => {
         res.render('notFound', { title: 'Error' });
     }
 });
+
+module.exports = router;

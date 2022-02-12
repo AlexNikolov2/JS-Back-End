@@ -52,3 +52,5 @@ router.post('/:id/edit',
             res.render('trip/edit', { title: 'Edit', errors: error.message.split('\n'), trip: data });
         }
     });
+
+    module.exports = router;

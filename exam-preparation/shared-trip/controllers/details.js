@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const { isAuth, isCreator } = require('../middlewares/guards');
+const { isAuth } = require('../middlewares/guards');
 const tripService = require('../services/tripService');
 
 const router = Router();
@@ -33,3 +33,6 @@ router.get('/:id/join', isAuth(), async (req, res) => {
         res.render('notFound', { title: 'Error' });
     }
 });
+
+
+module.exports = router;

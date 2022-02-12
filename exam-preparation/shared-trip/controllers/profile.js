@@ -18,3 +18,5 @@ router.get('/:id/profile', isAuth(), async (req, res) => {
         res.render('notFound', { title: 'Error' });
     }
 });
+
+module.exports = router;

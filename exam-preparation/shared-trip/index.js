@@ -8,7 +8,7 @@ const start = async () => {
     expressSetup(app);
     await mongooseSetup();
 
-    app.listen(3000, () => console.log('Server is listening on port 3000!'));
+    app.listen(3000, () => console.log('Servero krena na 3000!'));
 };
 
 start();

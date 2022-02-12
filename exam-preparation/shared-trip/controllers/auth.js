@@ -3,7 +3,6 @@ const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
 const authService = require('../services/authService');
-const tripService = require('../services/tripService');
 const { isGuest, isAuth } = require('../middlewares/guards');
 
 const router = Router();
