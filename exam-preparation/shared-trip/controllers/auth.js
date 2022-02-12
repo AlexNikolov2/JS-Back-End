@@ -2,7 +2,8 @@
 const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
-const authService = require('../services/authService');
+const authService = require('../services/auth');
+const tripService = require('../services/trip');
 const { isGuest, isAuth } = require('../middlewares/guards');
 
 const router = Router();
@@ -80,6 +81,20 @@ router.post('/register',
 router.get('/logout', isAuth(), (req, res) => {
     res.clearCookie('user');
     res.redirect('/');
+});
+
+router.get('/profile', isAuth(), async (req, res) => {
+    try {
+        const user = await authService.getProfile(req.params.id);
+        const trips = await tripService.getTripsByCreator(req.params.id);
+        user.isMale = user.gender == 'male';
+        user.hasCreated = trips.length > 0;
+        user.createdTrips = trips;
+        res.render('profile', { title: 'Profile', user });
+    } catch (error) {
+        console.log(error);
+        res.render('404', { title: 'Error' });
+    }
 });
 
 

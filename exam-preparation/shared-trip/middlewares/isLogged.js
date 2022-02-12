@@ -1,15 +1,16 @@
 const jwt = require('jsonwebtoken');
-const { cookie_name, secret } = require('../config');
+const cookieName = 'user';
+const secret = 'djami e najdobriot';
 
 module.exports = () => (req, res, next) => {
-    const token = req.cookies[cookie_name];
+    const token = req.cookies[cookieName];
     try {
         const decoded = jwt.verify(token, secret);
         req.user = decoded;
         res.locals = decoded;
         res.locals.isLogged = true;
     } catch (error) {
-        res.clearCookie(cookie_name);
+        res.clearCookie(cookieName);
     }
 
     next();

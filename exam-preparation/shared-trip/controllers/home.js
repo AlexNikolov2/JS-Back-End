@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 
-const tripService = require('../services/tripService');
+const tripService = require('../services/trip');
 
 const router = Router();
 
