@@ -16,7 +16,7 @@ The Topics are as they follow:
 * - [x] Workshop: Session and Authentication
 * - [x] Validation and Error Handling
 * - [x] Exam Preparation 1
-* - [] Exam Preparation 2
+* - [ ] Exam Preparation 2
 * - [ ] Workshop: REST API
 
 Exam preparations solved:
@@ -25,7 +25,7 @@ Exam preparations solved:
 * - [ ] ShoeShelf
 * - [ ] Theaters
 * - [ ] Tutorials
-* - [ ] Shared Trip
+* - [x] Shared Trip
 * - [ ] BookingUni
 
 **Exam: 26/02/2022**
