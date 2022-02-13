@@ -27,5 +27,8 @@ Exam preparations solved:
 * - [ ] Tutorials
 * - [x] Shared Trip
 * - [ ] BookingUni
+* - [ ] Real Estate Agency
+* - [ ] Carbicle finished
+* - [ ] Cubicle
 
 **Exam: 26/02/2022**
