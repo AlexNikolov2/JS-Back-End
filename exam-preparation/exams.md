@@ -5,7 +5,7 @@
 * - [ ] Theaters
 * - [ ] Tutorials
 * - [x] Shared Trip
-* - [ ] BookingUni
+* - [x] BookingUni
 * - [ ] Real Estate Agency
 * - [ ] Carbicle finished
 * - [ ] Cubicle
