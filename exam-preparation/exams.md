@@ -7,5 +7,5 @@
 * - [x] Shared Trip
 * - [x] BookingUni
 * - [ ] Real Estate Agency
-* - [ ] Carbicle finished
+* - [x] Carbicle finished
 * - [ ] Cubicle
