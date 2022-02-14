@@ -1,11 +1,12 @@
+
 const env = process.env.NODE_ENV || 'development';
 
 const config = {
     development: {
         port: process.env.PORT || 3000,
-        db_connection: 'mongodb://localhost/hotels',
-        cookie_name: 'mangal',
-        secret: 'Djamaikata e najdobriot',
+        db_connection: 'mongodb://localhost/booking',
+        cookie_name: 'user',
+        secret: 'very strong secret',
         salt_rounds: 10
     },
     production: {}
