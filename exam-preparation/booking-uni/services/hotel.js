@@ -1,23 +1,22 @@
 const Hotel = require('../models/Hotel');
 const User = require('../models/User');
 
-async function getAllHotels() {
-    return await Hotel.find({}).sort({freeRooms: 'desc'}).lean();
+async function getAll() {
+    return await Hotel.find({}).sort({ freeRooms: 'desc' }).lean();
 }
 
-async function create({hotel, city, freeRooms, imgUrl, owner}){
-    const newHotel = new Hotel({name: hotel, city, imgUrl, freeRooms: Number(freeRooms), owner});
+async function create({ hotel, city, freeRooms, imgURL, owner }) {
+    const newHotel = new Hotel({ name: hotel, city, imgURL, freeRooms: Number(freeRooms), owner });
     return newHotel.save();
 }
 
-async function getOneById(id){
+async function getOneById(id) {
     return await Hotel.findById(id).lean();
 }
 
-async function book(id, userId){
+async function book(id, userId) {
     const hotel = await Hotel.findById(id);
     const user = await User.findById(userId);
-
     if (!hotel.usersBooked.includes(userId) && hotel.freeRooms > 0) {
         hotel.usersBooked.push(userId);
         hotel.freeRooms = hotel.freeRooms - 1;
@@ -49,4 +48,4 @@ module.exports = {
     book,
     edit,
     deleteHotel
-};
+}

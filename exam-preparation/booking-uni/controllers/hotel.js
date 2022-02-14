@@ -1,7 +1,6 @@
-
 const { Router } = require('express');
 
-const hotelService = require('../services/hotelService');
+const hotelService = require('../services/hotel');
 const { cookie_name } = require('../config');
 const { isAuth, isCreator } = require('../middlewares/guards');
 
