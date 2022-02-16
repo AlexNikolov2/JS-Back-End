@@ -1,7 +1,7 @@
 const { Router } = require('express');
 
 const authService = require('../services/auth');
-const { cookie_name } = require('../config').development;
+const { cookie_name } = require('../config');
 const { isGuest, isAuth } = require('../middlewares/guards');
 
 const router = Router();

@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
-const { secret } = require('../config').development;
+const { secret } = require('../config');
 
 const login = async (username, password) => {
     const user = await User.findOne({ username }).lean();
