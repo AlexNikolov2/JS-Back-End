@@ -3,7 +3,7 @@ const { Router } = require('express');
 const cubeServices = require('../services/cube');
 const accessoryServices = require('../services/accessory');
 const { isCreator } = require('../middlewares/guards');
-const { cookie_name } = require('../config').development;
+const { cookie_name } = require('../config');
 
 const router = Router();
 
