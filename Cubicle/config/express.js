@@ -1,13 +1,19 @@
 const express = require('express');
-const handlebars = require('express-handlebars');
-const bodyParser = require('body-parser');
+const hbs = require('express-handlebars');
+const cookieParser = require('cookie-parser');
+const routes = require('./routes');
+const auth = require('../middlewares/auth');
 
 module.exports = (app) => {
-    
-    //TODO: Setup the view engine
 
-    //TODO: Setup the body parser
+    app.engine('hbs', hbs({ extname: '.hbs' }));
+    app.set('view engine', 'hbs');
 
-    //TODO: Setup the static files
+    app.use(express.urlencoded({ extended: true }));
+    app.use(cookieParser());
+    app.use(express.static('./static'));
+    app.use(auth);
+
+    app.use(routes);
 
 };
