@@ -1,9 +1,12 @@
-const env = process.env.NODE_ENV || 'development';
-const config = require('./config')[env];
 
-const app = require('express')();
+const express = require('express');
 
-require('./config/express')(app);
-require('./config/mongoose')();
+const config = require('./config');
+const expressSetup = require('./config/express');
+const mongooseSetup = require('./config/database');
 
-app.listen(config.port, console.log(`Listening on port ${config.port}! Now its up to you...`));
+const app = express();
+expressSetup(app);
+mongooseSetup();
+
+app.listen(config.port, () => console.log('Servero krenuva na port 3000, stegajte djameto!'));
