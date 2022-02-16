@@ -8,4 +8,4 @@
 * - [x] BookingUni
 * - [ ] Real Estate Agency
 * - [x] Carbicle finished
-* - [ ] Cubicle
+* - [x] Cubicle
