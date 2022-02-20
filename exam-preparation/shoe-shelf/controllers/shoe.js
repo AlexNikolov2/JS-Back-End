@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
 const { isAuth, isCreator } = require('../middlewares/guards');
-const offerService = require('../services/offerService');
+const offerService = require('../services/offer');
 
 const router = Router();
 

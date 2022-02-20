@@ -80,7 +80,7 @@ router.post('/register',
     });
 
     router.get('/:id/profile', isAuth(), async (req, res) => {
-        const user = await authService.getUserById(req.params.id);
+        const user = await authService.getProfile(req.params.id);
         user.totalCost = user.bought.reduce((acc, curr) => acc + curr.price, 0);
         res.render('user/profile', { title: 'Profile', user });
     });
