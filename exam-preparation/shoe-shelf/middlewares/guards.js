@@ -29,11 +29,11 @@ const isCreator = () => async (req, res, next) => {
         return;
     } 
     next();
-}
+};
 
 
 module.exports = {
     isAuth,
     isGuest,
     isCreator
-}
+};
