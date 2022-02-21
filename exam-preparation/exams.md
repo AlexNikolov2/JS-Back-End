@@ -3,7 +3,7 @@
 * - [ ] Wildlife Photography
 * - [x] ShoeShelf
 * - [x] Theaters
-* - [ ] Tutorials
+* - [x] Tutorials
 * - [x] Shared Trip
 * - [x] BookingUni
 * - [ ] Real Estate Agency
