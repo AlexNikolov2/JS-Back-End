@@ -23,7 +23,7 @@ Exam preparations solved:
 
 * - [ ] Wildlife Photography
 * - [x] ShoeShelf
-* - [ ] Theaters
+* - [x] Theaters
 * - [ ] Tutorials
 * - [x] Shared Trip
 * - [x] BookingUni

@@ -1,8 +1,8 @@
 **Exam preparations solved:**
 
 * - [ ] Wildlife Photography
-* - [ ] ShoeShelf
-* - [ ] Theaters
+* - [x] ShoeShelf
+* - [x] Theaters
 * - [ ] Tutorials
 * - [x] Shared Trip
 * - [x] BookingUni

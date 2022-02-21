@@ -22,7 +22,7 @@ router.post('/create',
             imageUrl: req.body.imageUrl,
             isPublic: req.body.isPublic ? true : false,
             creator: req.user._id
-        }
+        };
 
         try {
             const errors = validationResult(req).array().map(x => x.msg);
