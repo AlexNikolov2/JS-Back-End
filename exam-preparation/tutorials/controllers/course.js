@@ -23,7 +23,7 @@ router.post('/create',
             imageUrl: req.body.imageUrl,
             duration: req.body.duration,
             creator: req.user._id
-        }
+        };
         try {
             const errors = validationResult(req).array().map(x => x.msg);
 
@@ -70,7 +70,7 @@ router.post('/:id/edit', isAuth(), isCreator(),
             imageUrl: req.body.imageUrl,
             duration: req.body.duration,
             creator: req.user._id
-        }
+        };
         try {
             const errors = validationResult(req).array().map(x => x.msg);
 
