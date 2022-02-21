@@ -1,4 +1,4 @@
-const offerService = require('../services/offer');
+const offerService = require('../services/course');
 
 const isAuth = () => {
     return (req, res, next) => {
@@ -21,7 +21,7 @@ const isGuest = () => {
 };
 
 const isCreator = () => async (req, res, next) => {
-    const offer = await offerService.getById(req.params.id);
+    const offer = await offerService.getOneById(req.params.id);
     const isCreator = req.user && offer.creator == req.user._id;
 
     if (!isCreator) {

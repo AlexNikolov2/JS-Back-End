@@ -2,20 +2,20 @@
 const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
-const playService = require('../services/course');
 const { isAuth, isCreator } = require('../middlewares/guards');
+const courseService = require('../services/course');
+
 const router = Router();
 
 router.get('/create', isAuth(), (req, res) => {
-    res.render('/course/create', { title: 'Create' });
+    res.render('course/create', { title: 'Create course' });
 });
 
 router.post('/create',
-    isAuth(),
-    body('title').trim().isLength({ min: 4 }).withMessage('Title must be 4 characters long!'),
-    body('description').trim().isLength({ min: 20 }).withMessage('Description must be 20 characters long!'),
-    body('imageUrl').trim().matches(new RegExp('^https?')).withMessage('Image URL is required!'),
-    body('duration').trim().isLength({ min: 4 }).withMessage('Duration is required!'),
+    body('title').trim().isLength({ min: 4 }).withMessage('Title must be at least 4 characters long!'),
+    body('description').trim().isLength({ min: 20 }).withMessage('Description must be at least 20 characters long!'),
+    body('imageUrl').trim().matches(new RegExp('^https?')).withMessage('Image URL is invalid!'),
+    body('duration').trim().isLength({ min: 4 }).withMessage('Course duration is required!'),
     async (req, res) => {
         const data = {
             title: req.body.title,
@@ -23,8 +23,7 @@ router.post('/create',
             imageUrl: req.body.imageUrl,
             duration: req.body.duration,
             creator: req.user._id
-        };
-
+        }
         try {
             const errors = validationResult(req).array().map(x => x.msg);
 
@@ -35,7 +34,7 @@ router.post('/create',
             await courseService.create(data);
             res.redirect('/');
         } catch (error) {
-            res.render('/course/create', { title: 'Create', errors: error.message.split('\n'), oldData: data });
+            res.render('course/create', { title: 'Create', errors: error.message.split('\n'), oldData: data });
         }
     });
 
@@ -71,7 +70,7 @@ router.post('/:id/edit', isAuth(), isCreator(),
             imageUrl: req.body.imageUrl,
             duration: req.body.duration,
             creator: req.user._id
-        };
+        }
         try {
             const errors = validationResult(req).array().map(x => x.msg);
 

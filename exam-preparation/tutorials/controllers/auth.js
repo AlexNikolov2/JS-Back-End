@@ -20,11 +20,11 @@ router.post('/login',
     isGuest(),
     body('username')
         .trim()
-        .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long!')
+        .isLength({ min: 3 }).withMessage('Username must be at least 5 characters long!')
         .isAlphanumeric().withMessage('Username must consist only english letters and digits!'),
     body('password')
         .trim()
-        .isLength({ min: 3 }).withMessage('Password must be at least 3 characters long!')
+        .isLength({ min: 3 }).withMessage('Password must be at least 5 characters long!')
         .isAlphanumeric().withMessage('Password must consist only english letters and digits!'),
     async (req, res) => {
         const { username, password } = req.body;
@@ -48,16 +48,16 @@ router.post('/register',
     isGuest(),
     body('username')
         .trim()
-        .isLength({ min: 3 }).withMessage('Username must be at least 3 characters long!')
+        .isLength({ min: 5 }).withMessage('Username must be at least 5 characters long!')
         .isAlphanumeric().withMessage('Username must consist only english letters and digits!'),
     body('password')
         .trim()
-        .isLength({ min: 3 }).withMessage('Password must be at least 3 characters long!')
+        .isLength({ min: 5 }).withMessage('Password must be at least 5 characters long!')
         .isAlphanumeric().withMessage('Password must consist only english letters and digits!'),
     body('password')
         .trim()
         .custom((value, { req }) => {
-            if (value && value !== req.body.repeatPassword) {
+            if (value && value !== req.body.rePass) {
                 throw new Error('Passwords don`t match!');
             }
             return true;
