@@ -22,7 +22,7 @@ The Topics are as they follow:
 Exam preparations solved:
 
 * - [ ] Wildlife Photography
-* - [ ] ShoeShelf
+* - [x] ShoeShelf
 * - [ ] Theaters
 * - [ ] Tutorials
 * - [x] Shared Trip
