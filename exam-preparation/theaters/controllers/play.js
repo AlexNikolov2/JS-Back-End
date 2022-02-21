@@ -1,18 +1,20 @@
+
 const { Router } = require('express');
-const {body, validationResult} = require('express-validator');
+const { body, validationResult } = require('express-validator');
 
 const playService = require('../services/play');
-const {isAuth, isCreator} = require('../middlewares/guards');
+const { isAuth, isCreator } = require('../middlewares/guards');
 const router = Router();
 
 router.get('/create', isAuth(), (req, res) => {
-    res.render('create', {title: 'Create' });
+    res.render('create', { title: 'Create' });
 });
 
-router.post('/create', isAuth(),
-    body('title').trim.isLength({ min: 1}).withMessage('Title is required!'),
-    body('description').trim.isLength({ min: 1}).withMessage('Description is required!'),
-    body('imageUrl').trim.isLength({ min: 1}).withMessage('Image URL is required!'),
+router.post('/create',
+    isAuth(),
+    body('title').trim().isLength({ min: 1 }).withMessage('Title is required!'),
+    body('description').trim().isLength({ min: 1 }).withMessage('Description is required!'),
+    body('imageUrl').trim().isLength({ min: 1 }).withMessage('Image URL is required!'),
     async (req, res) => {
         const data = {
             title: req.body.title,
@@ -20,7 +22,7 @@ router.post('/create', isAuth(),
             imageUrl: req.body.imageUrl,
             isPublic: req.body.isPublic ? true : false,
             creator: req.user._id
-        };
+        }
 
         try {
             const errors = validationResult(req).array().map(x => x.msg);
@@ -34,7 +36,7 @@ router.post('/create', isAuth(),
         } catch (error) {
             res.render('create', { title: 'Create', errors: error.message.split('\n'), oldData: data });
         }
-});
+    });
 
 router.get('/:id/details', isAuth(), async (req, res) => {
     const play = await playService.getById(req.params.id);

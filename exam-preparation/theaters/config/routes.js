@@ -9,6 +9,6 @@ const router = Router();
 
 router.use('/', homeController);
 router.use('/auth', authController);
-router.use('/shoe', playController);
+router.use('/play', playController);
 
 module.exports = router;

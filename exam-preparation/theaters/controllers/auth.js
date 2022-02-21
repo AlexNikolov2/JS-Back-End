@@ -1,7 +1,8 @@
+
 const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
-const authService = require('../services/authService');
+const authService = require('../services/auth');
 const { cookie_name } = require('../config');
 const { isGuest, isAuth } = require('../middlewares/guards');
 
