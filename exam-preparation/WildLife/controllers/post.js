@@ -10,7 +10,13 @@ router.get('/create', isAuth(), async (req, res) => {
     res.render('create', {title: 'Create post'});
 });
 
-router.post('/create', isAuth(), async (req, res) => {
+router.post('/create', isAuth(),
+    body('title').trim().isLength({min: 6}).withMessage('Title must be minimum 6 characters!'),
+    body('keyword').trim().isLength({min: 6}).withMessage('keyword must be minimum 6 characters!'),
+    body('location').trim().isLength({max: 15}).withMessage('Location must be minimum 6 characters!'),
+    body('imageUrl').trim().matches(new RegExp('^https?')).withMessage('Image URL is invalid!'),
+    body('description').trim().isLength({min: 8}).withMessage('Description must be minimum 8 characters!'),
+ async (req, res) => {
     const data = {
         title: req.body.title,
         keyword: req.body.keyword,
@@ -18,22 +24,20 @@ router.post('/create', isAuth(), async (req, res) => {
         date: req.body.date,
         image: req.body.image,
         description: req.body.description,
-        author: req.user._id,
-        votes: req.body.votes,
-        rating: req.body.rating,       
+        author: req.user._id
     };
     try {
-        const error = validationResult(req).array().map(x => x.msg);
+        const errors = validationResult(req).array().map(x => x.msg);
 
-        if (error.length > 0) {
-            throw new Error(error.join('\n'));
+        if (errors.length > 0) {
+            throw new Error(errors.join('\n'));
         }
 
         await postService.create(data);
-        res.redirect('/');
+        res.redirect('/catalog');
     } catch (error) {
         data._id = req.params.id;
-        res.render('create', {title: 'Create post', errors: error.message.split('\n'), oldData: data});
+        res.render('create', {title: 'Create post', errors: error.message.split('\n'), post: data});
     }
 });
 
