@@ -1,39 +1,46 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/User');
-const {compare, hash} = require('bcrypt');
+const { secret, salt_rounds } = require('../config');
 
-async function register(username, password) {
+const login = async (email, password) => {
+    const user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } }).lean();
 
-    const existing = await getUserByUsername(username);
-
-    if(existing){
-        throw new Error('Username already exists');
+    if (user == null) {
+        throw new Error('User not found!');
     }
 
-    const hashedPassword = await hash(password, 10);
-    const user = new User({ username, hashedPassword: password });
-    await user.save();
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    return user;
-}
-
-async function login(username, password) {
-    const user = await getUserByUsername(username);
-
-    if(!user){
-        throw new Error('Invalid username or password');
+    if (!isMatch) {
+        throw new Error('Invalid password!');
     }
 
-    const isValid = await compare(password, user.hashedPassword);
+    const token = jwt.sign({ email: user.email, _id: user._id }, secret);
+    return token;
+};
 
-    if(!isValid){
-        throw new Error('Invalid username or password');
+const register = async (email, password) => {
+    let user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } }).lean();
+
+    if (user != null) {
+        throw new Error('Username already exists!');
     }
 
-    return user;
-}
+    const hashedPass = await bcrypt.hash(password, salt_rounds);
+    user = new User({ email, password: hashedPass});
 
-async function getUserByUsername(username) {
-    const user = User.find({ username });
+    return user.save();
+};
 
-    return user;
-}
+const getProfile = (id) => {
+    return User.findById(id).populate('bought').lean();
+};
+
+
+module.exports = {
+    login,
+    register,
+    getProfile
+};
