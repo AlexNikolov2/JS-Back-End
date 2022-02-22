@@ -21,7 +21,7 @@ const login = async (email, password) => {
     return token;
 };
 
-const register = async (email, password) => {
+const register = async (firstName, lastName, email, password) => {
     let user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } }).lean();
 
     if (user != null) {
@@ -29,13 +29,13 @@ const register = async (email, password) => {
     }
 
     const hashedPass = await bcrypt.hash(password, salt_rounds);
-    user = new User({ email, password: hashedPass});
+    user = new User({ firstName, lastName, email, password: hashedPass});
 
     return user.save();
 };
 
 const getProfile = (id) => {
-    return User.findById(id).populate('bought').lean();
+    return User.findById(id).populate('myPosts').lean();
 };
 
 
