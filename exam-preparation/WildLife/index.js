@@ -1,20 +1,18 @@
 const express = require('express');
-const expressConfig = require('./config/express');
-const session = require('express-session');
-const databaseConfig = require('./config/database');
-const routesConfig = require('./config/routes');
+
+const config = require('./config');
+const expressSetup = require('./config/express');
+const databaseSetup = require('./config/database');
+
+async function start() {
+    
+    const app = express();
+    await expressSetup(app);
+
+    await databaseSetup();
+    app.listen(config.port, () => {
+        console.log(`Servero krenuva qko na port ${config.port}`);
+    });
+}
 
 start();
-
-async function start(){
-    const app = express();
-
-    expressConfig(app);
-    await databaseConfig(app);
-    app.get('/', (req, res) => res.render('home', {layout: 'false'}));
-
-    app.listen(3000, () => {
-        console.log('Servero krena bre');
-    }
-    );
-}
