@@ -57,7 +57,7 @@ router.post('/register',
     body('password')
         .trim()
         .custom((value, { req }) => {
-            if (value && value !== req.body.rePass) {
+            if (value && value !== req.body.repass) {
                 throw new Error('Passwords don`t match!');
             }
             return true;
@@ -91,13 +91,13 @@ router.get('/logout', isAuth(), (req, res) => {
 router.get('/profile/:id', isAuth(), async (req, res) => {
     try {
         const user = await authService.getProfile(req.params.id);
-        const post = await postService.getPostByCreator(req.params.id);
+        const post = await postService.getPostsByCreator(req.params.id);
         user.hasCreated = post.length > 0;
         user.createdpost = post;
-        res.render('profile', { title: 'Profile', user });
+        res.render('my-posts', { title: 'Profile', user });
     } catch (error) {
         console.log(error);
-        res.render('notFound', { title: 'Error' });
+        res.render('error', { title: 'Error' });
     }
 });
 

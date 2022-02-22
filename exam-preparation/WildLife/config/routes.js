@@ -9,6 +9,6 @@ const router = Router();
 
 router.use('/', homeController);
 router.use('/auth', authController);
-router.use('/post', postController);
+router.use(postController);
 
 module.exports = router;

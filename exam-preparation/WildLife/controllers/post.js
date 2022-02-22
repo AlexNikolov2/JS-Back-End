@@ -7,7 +7,7 @@ const postService = require('../services/post');
 const router = Router();
 
 router.get('/create', isAuth(), async (req, res) => {
-    res.render('post/create', {title: 'Create post'});
+    res.render('create', {title: 'Create post'});
 });
 
 router.post('/create', isAuth(), async (req, res) => {
@@ -33,7 +33,7 @@ router.post('/create', isAuth(), async (req, res) => {
         res.redirect('/');
     } catch (error) {
         data._id = req.params.id;
-        res.render('post/create', {title: 'Create post', errors: error.message.split('\n'), oldData: data});
+        res.render('create', {title: 'Create post', errors: error.message.split('\n'), oldData: data});
     }
 });
 
@@ -47,7 +47,7 @@ router.get('/details/:id', isAuth(), async (req, res) => {
             post.isCreator = post.author._id == req.user._id;
             post.isVoted = post.votedUsers.some(x => x._id == req.user._id);
         }
-        res.render('post/details', {title: 'Details', post});
+        res.render('details', {title: 'Details', post});
 
         } catch (error) {
         }
@@ -60,16 +60,16 @@ router.get('/vote/:id/:type', isAuth(), async (req, res) => {
 
     try {
         const post = await postService.vote(id, value, req.user);
-        res.redirect(`/post/details/${id}`);
+        res.redirect(`details/${id}`);
     } catch (error) {
-        res.redirect(`/post/details/${id}`);
+        res.redirect(`details/${id}`);
     }
 });
 
 router.get('/edit/:id', isAuth(), isCreator(), async (req, res) => {
     try {
         const post = await postService.getById(req.params.id);
-        res.render('post/edit', {title: 'Edit', post});
+        res.render('edit', {title: 'Edit', post});
     } catch (error) {
         res.render('error', {title: 'Error', errors: error.message.split('\n')});
     }   
@@ -96,10 +96,10 @@ router.post('/edit/:id', isAuth(), isCreator(), async (req, res) => {
         }
 
         await postService.update(req.params.id, data);
-        res.redirect(`/post/details/${req.params.id}`);
+        res.redirect(`/details/${req.params.id}`);
     } catch (error) {
         data._id = req.params.id;
-        res.render('post/edit', {title: 'Edit', errors: error.message.split('\n'), oldData: data});
+        res.render('edit', {title: 'Edit', errors: error.message.split('\n'), oldData: data});
     }
 });
 
@@ -111,3 +111,5 @@ router.get('/delete/:id', isAuth(), isCreator(), async (req, res) => {
         res.render('error', {title: 'Error', errors: error.message.split('\n')});
     }
 });
+
+module.exports = router;
