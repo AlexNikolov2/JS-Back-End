@@ -1,21 +1,27 @@
-<section id="my-posts">
-    <h1>My post.</h1>
 
-    <div class="my-container">
-        <!-- If there are own posts for wildlife in the database display each of them -->
-        {{#if ownPosts}}
+<main>
+    <section id="my-posts">
+        <h1>My post.</h1>
 
-        {{#each ownPosts}}
-        {{> post}}
-        {{/each}}
+        <div class="my-container">
+            <!-- If there are own posts for wildlife in the database display each of them -->
 
-        {{else}}
-        <div class="no-posts">
-            <div class="no-posts-img">
-                <img src="/img/animal.jpg" alt="image_nature_3">
+            {{#if myPosts}}
+            {{#each myPosts}}
+            {{> myPostCard}}
+            {{/each}}
+            <!-- If there are still no own posts for wildlife in the database display: -->
+            {{else}}
+            <div class="no-posts">
+                <div class="no-posts-img">
+                    <! /-- Do not forget to change the path to the image, and remove this comment -- />
+                    <img src="./static/img/bear.jpg" alt="image_nature_3">
+                </div>
+                <p class="no-offer">There are no own posts yet...</p>
             </div>
-            <p class="no-offer">There are no posts yet...</p>
+
+            {{/if}}
         </div>
-        {{/if}}
-    </div>
-</section>
+    </section>
+
+</main>
