@@ -3,7 +3,6 @@ const { Router } = require('express');
 const { body, validationResult } = require('express-validator');
 
 const authService = require('../services/user');
-const postService = require('../services/post');
 const { cookie_name } = require('../config');
 const { isGuest, isAuth } = require('../middlewares/guards');
 
@@ -85,20 +84,6 @@ router.post('/register',
 router.get('/logout', isAuth(), (req, res) => {
     res.clearCookie(cookie_name);
     res.redirect('/');
-});
-
-
-router.get('/profile/:id', isAuth(), async (req, res) => {
-    try {
-        const user = await authService.getProfile(req.params.id);
-        const post = await postService.getPostsByCreator(req.params.id);
-        user.hasCreated = post.length > 0;
-        user.createdpost = post;
-        res.render('my-posts', { title: 'Profile', user });
-    } catch (error) {
-        console.log(error);
-        res.render('error', { title: 'Error' });
-    }
 });
 
 module.exports = router;

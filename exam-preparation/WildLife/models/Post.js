@@ -20,7 +20,7 @@ const postSchema = new Schema({
     minlength: [10, "Data must be at least 10 characters long"],
     maxlength: [10, "Data must be at most 10 characters long"],
   },
-  image: {
+  imageUrl: {
     type: String,
     validate: {
       validator(value) {

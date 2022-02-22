@@ -28,7 +28,7 @@
           <li><a href='/catalog'>All Posts</a></li>
           {{#if isLogged}}
             <li><a href='/create'>Create Post</a></li>
-            <li><a href='/auth/profile/{{_id}}'>Posts of {{email}}</a></li>
+            <li><a href='/my-posts'>Posts of {{email}}</a></li>
             <li><a href='/auth/logout'>Logout</a></li>
           {{else}}
             <li><a href='/auth/register'>Register</a></li>

@@ -1,49 +1,64 @@
-const Post = require('../models/Post');
 
-const create = (data) => {
-    const post = new Post(data);
-    return post.save();
-};
+const Post = require("../models/Post");
 
-const getAll = () => {
-    return Post.find({}).lean();
-};
+async function create(post) {
+    await Post.create(post);
+}
 
-const getById = (id) => {
-    return Post.findById(id).populate('author', 'firstName lastName').lean();
-};
+async function getAll() {
+    return await Post.find().lean();
+}
 
-const edit = async (id, data) => {
-    const post = await Post.findById(id);
-    Object.assign(post, data);
-    return post.save();
-};
+async function getById(id) {
+    return await Post.findById(id).populate("votes").populate("author");
+}
 
-const deletePost = (id) => {
-    return Post.findByIdAndDelete(id);
-};
-const vote = async (postId, userId, value) => {
-    const post = await Post.findById(postId);
+async function deletePost(id) {
+    return await Post.findByIdAndDelete(id);
+}
 
-    if(post.votes.includes(userId)){
-        throw new Error('You already voted!');
-    }
+async function editPost(id, post) {
+    return await Post.findByIdAndUpdate(id, post);
+}
 
-    post.votes.push(userId);
-    post.rating += value;
-    return post.save();
-};
-const getPostsByCreator = (creatorId) => {
-    return Post.find({ author: creatorId }).lean();
-};
+async function upVote(postId, user) {
+    const post = await getPostById(postId);
+    post.votes.push(user);
+    post.rating += 1;
+    post.save();
 
+}
+
+async function downVote(postId, user) {
+    const post = await getPostById(postId);
+    post.votes.push(user);
+    post.rating -= 1;
+    post.save();
+
+}
+
+function isVoted(post, user) {
+    return post.votes.map(v => v._id).some(x => x == user._id);
+}
+
+function votedUsers(post) {
+    return post.votes.map(x => x.email).join(", ");
+
+}
+
+async function myPosts(userId) {
+    return await Post.find({ author: userId }).lean().populate("author");
+}
 
 module.exports = {
     create,
     getAll,
     getById,
-    edit,
     deletePost,
-    vote,
-    getPostsByCreator
+    editPost,
+    upVote,
+    downVote,
+    isVoted,
+    votedUsers,
+    myPosts
 };
