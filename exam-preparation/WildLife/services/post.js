@@ -33,6 +33,9 @@ const vote = async (postId, userId, value) => {
     post.rating += value;
     return post.save();
 };
+const getPostsByCreator = (creatorId) => {
+    return Post.find({ author: creatorId }).lean();
+};
 
 
 module.exports = {
@@ -41,5 +44,6 @@ module.exports = {
     getById,
     edit,
     deletePost,
-    vote
+    vote,
+    getPostsByCreator
 };

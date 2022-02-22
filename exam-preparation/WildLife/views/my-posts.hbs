@@ -1,0 +1,21 @@
+<section id="my-posts">
+    <h1>My post.</h1>
+
+    <div class="my-container">
+        <!-- If there are own posts for wildlife in the database display each of them -->
+        {{#if ownPosts}}
+
+        {{#each ownPosts}}
+        {{> post}}
+        {{/each}}
+
+        {{else}}
+        <div class="no-posts">
+            <div class="no-posts-img">
+                <img src="/static/img/animal.jpg" alt="image_nature_3">
+            </div>
+            <p class="no-offer">There are no posts yet...</p>
+        </div>
+        {{/if}}
+    </div>
+</section>
