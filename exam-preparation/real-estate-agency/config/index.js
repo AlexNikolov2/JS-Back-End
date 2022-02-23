@@ -7,7 +7,8 @@ const config = {
         db_connection: 'mongodb://localhost/estate',
         cookie_name: 'user',
         secret: 'very strong secret',
-        salt_rounds: 10
+        salt_rounds: 10,
+        SECRET_TOKEN: "eyJhbGciOiJIUzI1NiJ9.joxNjQ0NjA3OTE5xmXpyvqnaLcthJUVp18"
     },
     production: {}
 };
