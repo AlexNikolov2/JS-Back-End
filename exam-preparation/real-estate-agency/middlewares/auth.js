@@ -1,39 +1,37 @@
-const jwt = require("jsonwebtoken");
-const {SECRET_TOKEN} = require("../config"); 
 
-function authMiddleware(req, res, next) {
-    const token = req.cookies["app-token"];
+const jwt = require('jsonwebtoken');
+const { cookie_name, SECRET_TOKEN} = require('../config');
 
-    if (token) {
-        try {
-            const decodedToken = jwt.verify(token, SECRET_TOKEN);
+exports.auth = function(req, res, next){
+    let token = req.cookies[cookie_name];
+
+    if(token){
+        jwt.verify(token, SECRET_TOKEN).then(decodedToken=>{
             req.user = decodedToken;
-            res.locals.user = decodedToken;
-        } catch (err) {
-            res.clearCookie("app-token");
-            res.status(401).render("404");
-        }
+            res.locals.user = decodedToken; 
+            next();
+        }).catch(err=>{
+            res.clearCookie(cookie_name);  
+            res.redirect('/auth/login');
+        });
 
-    }
-    next();
-}
-
-function isAuth(req, res, next) {
-    if (req.user) {
+    }else{
         next();
-    } else {
-        res.redirect("/login");
     }
-}
+};
 
-function isGuest(req, res, next) {
-    if (!req.user) {
-        return next();
+exports.isAuth = function(req, res, next) {
+    if(req.user){
+        next();
+    }else{
+        res.redirect('/auth/login');
     }
-    res.redirect('/404');
-}
-module.exports = {
-    authMiddleware,
-    isAuth,
-    isGuest
+};
+
+exports.isGuest = function(req, res, next){
+    if(!req.user){
+        next();
+    }else{
+        res.redirect('/');
+    }
 };

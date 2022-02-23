@@ -1,35 +1,28 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const { SECRET_TOKEN } = require("../config");
 
-async function register(user) {
-    await User.create(user);
-}
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+const {SECRET_TOKEN} = require('../config');
 
-async function login(username, password) {
-    const user = await User.findOne({ username });
-    if (!user) {
-
-        throw new Error("Username or password is invalid!");
+exports.login = async ({username, password}) =>{
+    let user = await User.findOne({username});
+    if(!user){
+        throw new Error ('Invalid user name or password!');
     }
 
-    const isValid = await user.comparePassword(password);
-    if (!isValid) {
-        throw new Error("Username or password is invalid!");
-
+    let isValid = await user.validatePassword(password);
+    if(!isValid){
+        throw new Error ('Invalid username or password!');
     }
 
-    const payload = {
-        _id: user._id,
-        name: user.name,
+    let payload = {
+        _id:user._id, 
+        name: user.name, 
         username: user.username
     };
 
-    const token = jwt.sign(payload, SECRET_TOKEN);
+    let token = await jwt.sign(payload, SECRET_TOKEN);
     return token;
-}
-
-module.exports = {
-    register,
-    login
+    
 };
+
+exports.register = (userData) => User.create(userData);

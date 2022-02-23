@@ -1,13 +1,14 @@
-const mongoose = require("mongoose");
 
-const houseSchema = new mongoose.Schema({
+const mongoose = require('mongoose');
+
+let housingSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
     },
     type: {
         type: String,
-        enum: ["Apartment", "Villa", "House"],
+        enum: ['Apartment', 'Villa', 'House'],
         required: true,
     },
     year: {
@@ -17,9 +18,8 @@ const houseSchema = new mongoose.Schema({
     city: {
         type: String,
         required: true,
-
     },
-    homeImage: {
+    image: {
         type: String,
         required: true,
     },
@@ -34,19 +34,18 @@ const houseSchema = new mongoose.Schema({
     tenants: [
         {
             type: mongoose.Types.ObjectId,
-            ref: "User"
+            ref: "User",
         }
     ],
     owner: {
-        type: mongoose.Types.ObjectId,
-        ref: "User",
-    }
-}, { timestamps: true });
+        type: mongoose.Types.ObjectId, 
+        ref: 'User'
+    },
+},  {timestamps: true});
 
-houseSchema.method("getTenants", async function () {
-    return await this.tenants.map(t => t.name).join(", ");
+housingSchema.method('getTenants', function(){
+    return this.tenants.map( x => x.name).join(', ');
 });
 
-const House = mongoose.model("House", houseSchema);
-
-module.exports = House;
+let Housing = mongoose.model('Housing', housingSchema);
+module.exports = Housing;

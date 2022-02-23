@@ -5,7 +5,7 @@ const config = {
     development: {
         port: process.env.PORT || 3000,
         db_connection: 'mongodb://localhost/estate',
-        cookie_name: 'user',
+        cookie_name: 'app-token',
         secret: 'very strong secret',
         salt_rounds: 10,
         SECRET_TOKEN: "eyJhbGciOiJIUzI1NiJ9.joxNjQ0NjA3OTE5xmXpyvqnaLcthJUVp18"

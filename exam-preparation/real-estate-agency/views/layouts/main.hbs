@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,42 +6,28 @@
     <meta charset="UTF-8">
     <!-- Do not forget to change the path to the css file -->
     <title>{{title}}</title>
-    <link href="../static/css/style.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
 
     <div id="box">
 
-        <!-- In case of error, you should display div with class "errorContainer" -->
-        <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-        {{#if errors}}
-        <div>
-            {{#each errors}}
-            <div class="errorContainer">
-                <p>{{errors.message}}</p>
-            </div>
-            {{/each}}
-        </div>
-        {{/if}}
-
 
         <nav>
             <a href="/">Home</a>
             <ul>
-                <!-- Guest users and Logged users -->
                 <li><a href="/housing">Housing for rent</a></li>
-                <!-- Guest users -->
+                <!-- Logged user - така контролираме какво да се покаже при какви условия-->
                 {{#if user}}
-                <li><a href="/create">Create offer</a></li>
+                <li><a href="/housing/create">Create offer</a></li>
                 <li><a href="/search">Search</a></li>
-                <li><a href="/logout">Logout</a></li>
-
-                <!-- Logged users -->
+                <li><a href="/auth/logout">Logout</a></li>
                 {{else}}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
-                {{/if}}
+                <!-- Guest user -->
+                <li><a href="/auth/login">Login</a></li>
+                <li><a href="/auth/register">Register</a></li>
+               {{/if}}
             </ul>
         </nav>
 
