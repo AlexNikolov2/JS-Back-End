@@ -6,6 +6,6 @@
 * - [x] Tutorials
 * - [x] Shared Trip
 * - [x] BookingUni
-* - [ ] Real Estate Agency
+* - [x] Real Estate Agency
 * - [x] Carbicle finished
 * - [x] Cubicle
