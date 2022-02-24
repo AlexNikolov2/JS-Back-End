@@ -30,5 +30,5 @@ Exam preparations solved:
 * - [x] Real Estate Agency
 * - [x] Carbicle finished
 * - [x] Cubicle
-
+//All exams solved!
 **Exam: 26/02/2022**
