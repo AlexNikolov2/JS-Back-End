@@ -9,3 +9,4 @@
 * - [x] Real Estate Agency
 * - [x] Carbicle finished
 * - [x] Cubicle
+* - [x] Art Gallery

@@ -21,7 +21,7 @@ The Topics are as they follow:
 
 Exam preparations solved:
 
-* - [x] Wildlife Photography
+* - [x] Wildlife Photography (solved with session instead of jwt)
 * - [x] ShoeShelf
 * - [x] Theaters
 * - [x] Tutorials
@@ -30,5 +30,6 @@ Exam preparations solved:
 * - [x] Real Estate Agency (solved w session instead of jwt)
 * - [x] Carbicle finished
 * - [x] Cubicle
+* - [x] Art Gallery (solved w session instead of jwt)
 //All exams solved!
 **Exam: 26/02/2022**
