@@ -1,64 +1,61 @@
 
-const Post = require("../models/Post");
+const Post = require('../models/Post');
+const { posViewModel } = require('../util/mapper');
 
-async function create(post) {
-    await Post.create(post);
+async function createPost(data) {
+    const post = new Post(data);
+    await post.save();
+    return post;
 }
 
-async function getAll() {
-    return await Post.find().lean();
+async function getPosts() {
+    const posts = await Post.find({});
+
+    return posts.map(posViewModel);
 }
 
-async function getById(id) {
-    return await Post.findById(id).populate("votes").populate("author");
+async function getUserPosts(author) {
+    const posts = await Post.find({ author }).populate('author', 'firstname lastname');
+
+    return posts.map(posViewModel);
+}
+
+async function getOnePost(id) {
+    const post = await Post.findById(id).populate('author', 'firstname lastname').populate('votes', 'email');
+
+    if (post) {
+        return posViewModel(post);
+    } else {
+        throw new Error('Post doesn\'t exist');
+    }
+}
+
+async function editPost(id, data) {
+    const post = await Post.findByIdAndUpdate(id, data, { runValidators: true });
 }
 
 async function deletePost(id) {
-    return await Post.findByIdAndDelete(id);
+    await Post.findByIdAndDelete(id);
 }
 
-async function editPost(id, post) {
-    return await Post.findByIdAndUpdate(id, post);
-}
+async function vote(id, userId, value) {
+    const post = await Post.findById(id);
 
-async function upVote(postId, user) {
-    const post = await getPostById(postId);
-    post.votes.push(user);
-    post.rating += 1;
-    post.save();
+    if (post.votes.includes(userId)) {
+        throw new Error('User already voted!');
+    }
 
-}
-
-async function downVote(postId, user) {
-    const post = await getPostById(postId);
-    post.votes.push(user);
-    post.rating -= 1;
-    post.save();
-
-}
-
-function isVoted(post, user) {
-    return post.votes.map(v => v._id).some(x => x == user._id);
-}
-
-function votedUsers(post) {
-    return post.votes.map(x => x.email).join(", ");
-
-}
-
-async function myPosts(userId) {
-    return await Post.find({ author: userId }).lean().populate("author");
+    post.votes.push(userId);
+    post.rating += value;
+    await post.save();
 }
 
 module.exports = {
-    create,
-    getAll,
-    getById,
-    deletePost,
+    createPost,
+    getPosts,
+    getOnePost,
     editPost,
-    upVote,
-    downVote,
-    isVoted,
-    votedUsers,
-    myPosts
+    deletePost,
+    vote,
+    getUserPosts
 };

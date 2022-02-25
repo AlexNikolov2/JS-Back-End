@@ -1,88 +1,55 @@
-
-const { Router } = require('express');
-const { body, validationResult } = require('express-validator');
-
-const authService = require('../services/user');
-const { cookie_name } = require('../config');
-const { isGuest, isAuth } = require('../middlewares/guards');
-
-const router = Router();
-
-router.get('/login', isGuest(), (req, res) => {
-    res.render('login', { title: 'Login' });
-});
+const router = require('express').Router();
+const { isGuest, isUser } = require('../middlewares/guards');
+const { register, login } = require('../services/auth');
+const { mapErrors } = require('../middlewares/mapper');
 
 router.get('/register', isGuest(), (req, res) => {
-    res.render('register', { title: 'Register' });
+    res.render('register', { title: 'Register Page' });
 });
 
-router.post('/login',
-    isGuest(),
-    body('email')
-        .trim()
-        .isEmail().withMessage('Invalid email!'),
-    body('password')
-        .trim()
-        .isLength({ min: 4 }).withMessage('Password must be at least 4 characters long!'),
-    async (req, res) => {
-        const { email, password } = req.body;
+router.post('/register', isGuest(), async (req, res) => {
+    const {email, password, repass, firstname, lastname} = req.body;
 
-        try {
-            const errors = validationResult(req).array().map(x => x.msg);
-
-            if (errors.length > 0) {
-                throw new Error(errors.join('\n'));
-            }
-
-            const token = await authService.login(email, password);
-            res.cookie(cookie_name, token);
-            res.redirect('/');
-        } catch (error) {
-            res.render('login', { title: 'Login', errors: error.message.split('\n'), oldData: email });
+    try {
+        if (password.trim() == '' || password.length < 4) {
+            throw new Error('Password is required and must be at least 4 characters long');
+        } else if (password != repass) {
+            throw new Error('Passwords don\'t match');
         }
-    });
 
-router.post('/register',
-    isGuest(),
-    body('firstName').
-    trim().isLength({ min: 3 }).withMessage('First name must be at least 3 characters long!'),
-    body('lastName').trim().isLength({ min: 5 }).withMessage('Last name must be at least 5 characters long!'),
-    body('email')
-        .trim()
-        .isEmail().withMessage('Invalid email!'),
-    body('password')
-        .trim()
-        .isLength({ min: 4 }).withMessage('Password must be at least 4 characters long!'),
-    body('password')
-        .trim()
-        .custom((value, { req }) => {
-            if (value && value !== req.body.repass) {
-                throw new Error('Passwords don`t match!');
-            }
-            return true;
-        }),
-    async (req, res) => {
-        const { firstName, lastName, email, password } = req.body;
+        const user = await register(firstname, lastname, email, password);
+        req.session.user = user;
+        res.redirect('/');
+    } catch (err) {
+        const errors = mapErrors(err);
+        const data = {
+            firstname,
+            lastname,
+            email
+        };
+        res.render('register', { title: 'Register Page', data, errors });
+    }
+});
 
-        try {
-            const errors = validationResult(req).array().map(x => x.msg);
+router.get('/login', isGuest(), (req, res) => {
+    res.render('login', { title: 'Login Page' });
+});
 
-            if (errors.length > 0) {
-                throw new Error(errors.join('\n'));
-            }
+router.post('/login', isGuest(), async (req, res) => {
+    const {email, password} = req.body;
 
-            await authService.register( firstName, lastName, email, password);
-            const token = await authService.login(email, password);
-            res.cookie(cookie_name, token);
-            res.redirect('/');
-        } catch (error) {
-            console.log(error.message);
-            res.render('register', { title: 'Register', errors: error.message.split('\n'), oldData: req.body });
-        }
-    });
+    try {
+        const user = await login(email, password);
+        req.session.user = user;
+        res.redirect('/');
+    } catch (err) {
+        const errors = mapErrors(err);
+        res.render('login', { title: 'Login Page', data: { email: email }, errors });
+    }
+});
 
-router.get('/logout', isAuth(), (req, res) => {
-    res.clearCookie(cookie_name);
+router.get('/logout', isUser(), (req, res) => {
+    delete req.session.user;
     res.redirect('/');
 });
 

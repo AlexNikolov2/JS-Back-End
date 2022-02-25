@@ -1,14 +1,10 @@
 
-const { Router } = require('express');
-
-const homeController = require('../controllers/home');
 const authController = require('../controllers/auth');
+const homeController = require('../controllers/home');
 const postController = require('../controllers/post');
 
-const router = Router();
-
-router.use('/', homeController);
-router.use('/auth', authController);
-router.use(postController);
-
-module.exports = router;
+module.exports = (app) => {
+    app.use(authController);
+    app.use(homeController);
+    app.use(postController);
+};

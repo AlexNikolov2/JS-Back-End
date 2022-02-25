@@ -1,21 +1,28 @@
-const mongoose = require('mongoose');
-const config = require('./index');
 
-module.exports = () => {
-    return new Promise((resolve, reject) => {
-        mongoose.connect(config.db_connection, {
+const mongoose = require('mongoose');
+
+require('../models/User');
+require('../models/Post');
+
+const dbName = 'wildlifePhotography';
+const connnectionString = `mongodb://localhost:27017/${dbName}`;
+
+module.exports = async (app) => {
+    try {
+        mongoose.connect(connnectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
-        const db = mongoose.connection;
 
-        db.on('error', (err) => {
-            console.error('connection error: ' + err.message);
-            reject(err);
+        console.log('Database connected');
+
+        mongoose.connection.on('error', (err) => {
+            console.error('Database error');
+            console.error(err);
         });
-        db.once('open', () => {
-            console.log('Db Connected!');
-            resolve();
-        });
-    });
+    } catch (err) {
+        console.error('Error connecting to database');
+        process.exit(1);
+    }
+
 };

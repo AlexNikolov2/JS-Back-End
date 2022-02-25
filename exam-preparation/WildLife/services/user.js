@@ -1,46 +1,50 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
-const { secret, salt_rounds } = require('../config');
+const { hash, compare } = require('bcrypt');
 
-const login = async (email, password) => {
-    const user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } }).lean();
+async function register(firstname, lastname, email, password) {
+    const existing = await getUserByUsername(email);
 
-    if (user == null) {
-        throw new Error('User not found!');
+    
+    if (existing) {
+        throw new Error('Username is taken');
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const hashedPassword = await hash(password, 10);
+    const user = new User({
+        firstname,
+        lastname,
+        email,
+        hashedPassword
+    });
 
-    if (!isMatch) {
-        throw new Error('Invalid password!');
+    await user.save();
+
+    return user;
+}
+
+async function login(email, password) {
+    const user = await getUserByUsername(email);
+
+    if (!user) {
+        throw new Error('Incorrect Username or Password');
     }
 
-    const token = jwt.sign({ email: user.email, _id: user._id }, secret);
-    return token;
-};
+    const validPassword = await compare(password, user.hashedPassword);
 
-const register = async (firstName, lastName, email, password) => {
-    let user = await User.findOne({ email: { $regex: new RegExp(`^${email}$`, 'i') } }).lean();
-
-    if (user != null) {
-        throw new Error('Username already exists!');
+    if (!validPassword) {
+        throw new Error('Incorrect Username or Password');
     }
 
-    const hashedPass = await bcrypt.hash(password, salt_rounds);
-    user = new User({ firstName, lastName, email, password: hashedPass});
+    return user;
+}
 
-    return user.save();
-};
-
-const getProfile = (id) => {
-    return User.findById(id).populate('myPosts').lean();
-};
-
+async function getUserByUsername(email) {
+    const user = await User.findOne({ email: new RegExp(`^${email}$`, 'i') });
+    return user;
+}
 
 module.exports = {
-    login,
     register,
-    getProfile
+    login
 };

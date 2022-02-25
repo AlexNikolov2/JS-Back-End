@@ -1,25 +1,37 @@
-const isAuth = () => {
-    return (req, res, next) => {
-        if (req.user !== undefined) {
+
+function isUser() {
+    return function (req, res, next) {
+        if (req.session.user) {
             next();
         } else {
-            res.redirect('/auth/login');
+            res.redirect('/login');
         }
     };
-};
+}
 
-const isGuest = () => {
-    return (req, res, next) => {
-        if (req.user == undefined) {
-            next();
-        } else {
+function isGuest() {
+    return function (req, res, next) {
+        if (req.session.user) {
             res.redirect('/');
+        } else {
+            next();
         }
     };
-};
+}
 
+function isOwner() {
+    return function (req, res, next) {
+        const userId = req.session.user?._id;
+        if (res.locals.data.owner == userId) {
+            next();
+        } else {
+            res.redirect('/login');
+        }
+    };
+}
 
 module.exports = {
-    isAuth,
+    isUser,
     isGuest,
+    isOwner
 };
