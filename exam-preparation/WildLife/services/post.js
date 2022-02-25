@@ -1,6 +1,6 @@
 
 const Post = require('../models/Post');
-const { posViewModel } = require('../util/mapper');
+const { posViewModel } = require('../middlewares/mapErrors');
 
 async function createPost(data) {
     const post = new Post(data);

@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const { isUser } = require('../middlewares/guards');
 const { createPost, getOnePost, editPost, deletePost, vote } = require('../services/post');
-const { mapErrors } = require('../middlewares/mapper');
+const { mapErrors } = require('../middlewares/mapErrors');
 
 router.get('/create', isUser(), (req, res) => {
-    res.render('create', { title: 'Create Page' });
+    res.render('create', { title : 'Create Post'});
 });
 
 router.post('/create', isUser(), async (req, res) => {

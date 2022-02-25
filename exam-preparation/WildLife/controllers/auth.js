@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { isGuest, isUser } = require('../middlewares/guards');
 const { register, login } = require('../services/auth');
-const { mapErrors } = require('../middlewares/mapper');
+const { mapErrors } = require('../middlewares/mapErrors');
 
 router.get('/register', isGuest(), (req, res) => {
     res.render('register', { title: 'Register Page' });
