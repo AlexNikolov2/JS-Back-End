@@ -16,7 +16,7 @@ async function getAll() {
     return Publication.find({}).lean();
 }
 
-async function getPublById(id) {
+async function getPublicationById(id) {
     return Publication.findById(id).populate('owner', 'username').lean();
 }
 

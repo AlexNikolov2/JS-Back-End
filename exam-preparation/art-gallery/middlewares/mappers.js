@@ -1,13 +1,14 @@
 
-const { getPublicationById } = require('../services/publications');
-
-function preload() {
-    return async function (req, res, next) {
-        const id = req.params.id;
-        const data = await getPublicationById(id);
-        res.locals.data = data;
-        next();
-    };
+function mapErrors(err) {
+    if (Array.isArray(err)) {
+        return err;
+    } else if (err.name == 'ValidationError') {
+        return Object.values(err.errors).map(e => ({ msg: e.message }));
+    } else if (typeof err.message == 'string') {
+        return [{ msg: err.message }];
+    } else {
+        return [{ msg: 'Request error' }];
+    }
 }
 
-module.exports = preload;
+module.exports = mapErrors;
