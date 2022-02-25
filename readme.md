@@ -27,7 +27,7 @@ Exam preparations solved:
 * - [x] Tutorials
 * - [x] Shared Trip
 * - [x] BookingUni
-* - [x] Real Estate Agency
+* - [x] Real Estate Agency (solved w session instead of jwt)
 * - [x] Carbicle finished
 * - [x] Cubicle
 //All exams solved!
