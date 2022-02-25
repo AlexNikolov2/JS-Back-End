@@ -1,10 +1,10 @@
 
 const router = require('express').Router();
 
-const { isUser, isOwner } = require('../middleware/guards');
-const preload = require('../middleware/preload');
+const { isUser, isOwner } = require('../middlewares/guards');
+const preload = require('../middlewares/preload');
 const { createHousing, updateHouse, deleteById } = require('../services/housing');
-const mapErrors = require('../util/mappers');
+const mapErrors = require('../middlewares/mappers');
 
 
 router.get('/create', isUser(), (req, res) => {

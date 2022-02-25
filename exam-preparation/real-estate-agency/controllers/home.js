@@ -15,14 +15,14 @@ router.get('/catalog', async (req, res) => {
 });
 
 router.get('/catalog/:id', preload(true), (req, res) => {
-    const house = res.locals.data.house;
+    const house = res.locals.data;
     house.remainingRent = house.pieces - house.renters.length;
 
-    if(req.session.user){
+    if (req.session.user) {
         house.hasUser = true;
-        house.isOwner = req.session.user?._id === house.owner._id;
+        house.isOwner = req.session.user?._id == house.owner._id;
 
-        if(house.renters.some(b => b._id == req.session.user._id)){
+        if (house.renters.some(b => b._id == req.session.user._id)) {
             house.isJoined = true;
         }
     }

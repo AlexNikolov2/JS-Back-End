@@ -5,26 +5,25 @@ const { route } = require('./home');
 
 const router = require('express').Router();
 
-router.get('/register', isGuest, (req, res)=>{
-    res.render('register', { title: 'Register Page'});
+router.get('/register', isGuest(), (req, res) => {
+    res.render('register', { title: 'Register Page' });
 });
 
-router.post('/register', isGuest, async (req, res) => {
-    try{
-        if(req.body.password.trim().length < 4){
-            throw new Error('Password must be at least 4 characters long');
+router.post('/register', isGuest(), async (req, res) => {
+    try {
+        if (req.body.password.trim().length < 4) {
+            throw new Error('Passwords should be at least 4 characters long!');
         }
-        if(req.body.password !== req.body.repass){
-            throw new Error('Passwords do not match');
+        if (req.body.password != req.body.repass) {
+            throw new Error('Passwords don\'t match!');
         }
         const user = await register(req.body.name, req.body.username, req.body.password);
         req.session.user = user;
         res.redirect('/');
-    }
-    catch (err) {
+    } catch (err) {
         console.error(err);
         const errors = mapErrors(err);
-        res.render('register',  {data: {name: req.body.name, username: req.body.username}, errors, title: 'Register Page'});
+        res.render('register', { data: { name: req.body.name, username: req.body.username }, errors, title: 'Register Page' });
     }
 });
 
