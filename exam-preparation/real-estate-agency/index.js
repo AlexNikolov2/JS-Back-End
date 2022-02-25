@@ -1,15 +1,17 @@
+
 const express = require('express');
-
-const config = require('./config');
-const expressSetup = require('./config/express');
-const mongooseSetup = require('./config/database');
-
-const start = async () => {
-    const app = express();
-    expressSetup(app);
-    await mongooseSetup();
-
-    app.listen(config.port, () => console.log(`Servero krena na ${config.port}!`));
-};
+const expressConfig = require('./config/express');
+const databaseConfig = require('./config/database');
+const routesConfig = require('./config/routes');
 
 start();
+
+async function start() {
+    const app = express();
+
+    expressConfig(app);
+    await databaseConfig(app);
+    routesConfig(app);
+
+    app.listen(3000, () => console.log('Server running on port 3000!'));
+}

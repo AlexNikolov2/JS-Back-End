@@ -1,16 +1,15 @@
 
-const router = require('express').Router();
-
-const homeController = require('../controllers/home');
 const authController = require('../controllers/auth');
+const homeController = require('../controllers/home');
 const housingController = require('../controllers/housing');
+// TODO add other controllers....
 
-router.use('/', homeController);
-router.use('/auth', authController);
-router.use('/housing', housingController);
-router.use('*', (req, res)=>{
-    res.render('404');
-});
+module.exports = (app) => {
+    app.use(authController);
+    app.use(homeController);
+    app.use(housingController);
 
-
-module.exports = router;
+    app.get('*', (req, res) => {
+        res.status(404).render('404', { title: 'Not Found Page' });
+    });
+};

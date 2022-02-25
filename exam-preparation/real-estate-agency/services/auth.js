@@ -1,28 +1,47 @@
+const User = require('../models/User');
+const { hash, compare } = require('bcrypt');
 
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const {SECRET_TOKEN} = require('../config');
 
-exports.login = async ({username, password}) =>{
-    let user = await User.findOne({username});
-    if(!user){
-        throw new Error ('Invalid user name or password!');
+async function register(name, username, password) {
+    const existing = await getUserByUsername(username);
+
+    if (existing) {
+        throw new Error('Username is taken!');
     }
 
-    let isValid = await user.validatePassword(password);
-    if(!isValid){
-        throw new Error ('Invalid username or password!');
+    const hashedPassword = await hash(password, 10);
+
+    const user = new User({
+        name,
+        username,
+        hashedPassword
+    });
+    await user.save();
+
+    return user;
+}
+
+async function login(username, password) {
+    const user = await getUserByUsername(username);
+
+    if (!user) {
+        throw new Error('Incorrect username or password!');
     }
 
-    let payload = {
-        _id:user._id, 
-        name: user.name, 
-        username: user.username
-    };
+    const hasMatch = await compare(password, user.hashedPassword);
+    if (!hasMatch) {
+        throw new Error('Incorrect username or password!');
+    }
 
-    let token = await jwt.sign(payload, SECRET_TOKEN);
-    return token;
-    
+    return user;
+}
+
+async function getUserByUsername(username) {
+    const user = User.findOne({ username: new RegExp(`^${username}$`, 'i') });
+    return user;
+}
+
+module.exports = {
+    login,
+    register
 };
-
-exports.register = (userData) => User.create(userData);

@@ -1,69 +1,54 @@
+const {isUser, isGuest} = require('../middlewares/guards');
+const {login, register} = require('../services/user');
+const mapErrors  = require('../middlewares/mappers');
+const { route } = require('./home');
+
 const router = require('express').Router();
-const {isGuest, isAuth} = require('../middlewares/auth');
-const authService = require('../services/auth');
-
-const {cookie_name}=require('../config');
-
-router.get('/login', isGuest, (req, res)=>{
-    res.render('auth/login');
-});
-
-router.post('/login', isGuest, async (req, res)=>{
-    const {username, password} = req.body;
-
-    try{
-        let token = await authService.login({username, password});
-        res.cookie(cookie_name, token);
-        res.redirect('/');
-        
-    }
-    catch(err){
-        res.end();
-    }
-});
 
 router.get('/register', isGuest, (req, res)=>{
-    res.render('auth/register');
+    res.render('register', { title: 'Register Page'});
 });
 
-
-router.post('/register', isGuest, async (req, res)=>{
-    const{name, username, password, rePassword} = req.body;
-    if(password !== rePassword){
-        res.locals.error = 'Password mismatch';
-        return res.render('auth/register');
-    }
+router.post('/register', isGuest, async (req, res) => {
     try{
-        await authService.register({name, username, password});
-
-        let token = await authService.login({
-            username, 
-            password
-        });
-        
-        res.cookie(cookie_name, token);
-
+        if(req.body.password.trim().length < 4){
+            throw new Error('Password must be at least 4 characters long');
+        }
+        if(req.body.password !== req.body.repass){
+            throw new Error('Passwords do not match');
+        }
+        const user = await register(req.body.name, req.body.username, req.body.password);
+        req.session.user = user;
         res.redirect('/');
-
     }
     catch (err) {
-        let errorMSG = '';
-
-        if (error.name === 'MongoError' && error.code === 11000) {
-            errorMSG = 'Username or email already exists!';
-        } else if (error.errors) {
-            errorMSG = Object.values(error.errors).map(x => x.properties.message)[0];
-        } else {
-            errorMSG = error.message;
-        }
-
-        res.render('register', { title: 'Register', error: errorMSG, oldData: { username, email } });
+        console.error(err);
+        const errors = mapErrors(err);
+        res.render('register',  {data: {name: req.body.name, username: req.body.username}, errors, title: 'Register Page'});
     }
 });
 
-router.get('/logout', isAuth, (req, res)=>{
-    res.clearCookie(cookie_name);
-    res.redirect('/');
+router.get('/login', isGuest(), (req, res)=>{
+    res.render('login', {title: 'Login Page'});
 });
 
-module.exports = router;
+router.post('/login', isGuest(), async (req, res)=>{
+    try{
+        const user = await login(req.body.username, req.body.password);
+        req.session.user = user;
+        res.redirect('/');
+    }
+    catch(err){
+        console.error(err);
+        const errors = mapErrors(err);
+        res.render('login', {data: {username: req.body.username}, errors, title: 'Login Page'});
+    }
+});
+
+router.get("/logout", isUser(), (req, res)=>{
+    delete req.session.user;
+    res.redirect('/');
+    });
+
+    module.exports = router;
+

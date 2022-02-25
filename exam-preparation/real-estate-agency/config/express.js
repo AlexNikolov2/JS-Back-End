@@ -1,22 +1,24 @@
 
 const express = require('express');
-const {create: handlebars} = require('express-handlebars');
-const cookieParser = require('cookie-parser');
-
-const routes = require('./routes');
-const {auth} = require('../middlewares/auth');
+const { create: handlebars } = require('express-handlebars');
+const session = require('express-session');
+const userSession = require('../middleware/userSession');
 
 module.exports = (app) => {
     app.engine('.hbs', handlebars({
-        extname : '.hbs'
+        extname: '.hbs'
     }).engine);
-
     app.set('view engine', '.hbs');
 
+    app.use('/static', express.static('static'));
+    app.use(session({
+        secret: 'secret',
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            secure: 'auto'
+        }
+    }));
     app.use(express.urlencoded({ extended: true }));
-    app.use(cookieParser());
-    app.use(express.static('./static'));
-    app.use(auth);
-
-    app.use(routes);
+    app.use(userSession());
 };
