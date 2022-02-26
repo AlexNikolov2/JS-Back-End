@@ -1,0 +1,54 @@
+           <form class="search" action="/search" method="POST">
+                <input type="search" name="search" value="{{search}}" placeholder="Search email...">
+                <button type="submit" class="btn-search">
+                    <!-- Do not forget to change the path to the image -->
+                    <img src="./static/img/search-icon.png" alt="search-icon">
+                    Search
+                </button>
+            </form>
+
+            <section id="search-page">
+
+                <h2>Search result:</h2>
+
+                {{#if results}}
+
+                {{#each results}}
+                <article class="search-page-result">
+                    <p class="search-page-result-headline">Headline: {{data.headline}}</p>
+                    <p class="search-page-result-companyName">Company Name: {{data.companyName}}</p>
+                </article>
+                {{/each}}
+
+                {{else}}
+                    <article class="search-page-no-result">
+                        <p class="search-page-no-result-message">No match found.</p>
+                    </article>
+                {{/if}}
+                <!--If there are a search matches, show each ad-->
+                <!--<article class="search-page-result">
+                    <p class="search-page-result-headline">Headline: Frond End Developer</p>
+                    <p class="search-page-result-companyName">Company Name: WebCam</p>
+                </article>
+
+                <article class="search-page-result">
+                    <p class="search-page-result-headline">Headline: UI / UX Designers</p>
+                    <p class="search-page-result-companyName">Company Name: Digital Solutions</p>
+                </article>-->
+                <!--If not show:-->
+                <!--<article class="search-page-no-result">
+                    <p class="search-page-no-result-message">No match found.</p>
+                </article>-->
+
+            </section>
+
+        </main>
+
+        <footer>
+            <p>©Js Back-End Final Exam 2022</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
