@@ -31,5 +31,7 @@ Exam preparations solved:
 * - [x] Carbicle finished
 * - [x] Cubicle
 * - [x] Art Gallery (solved w session instead of jwt)
-//All exams solved!
+
 **Exam: 26/02/2022**
+
+* - [x] Job Ads
