@@ -10,3 +10,5 @@
 * - [x] Carbicle finished
 * - [x] Cubicle
 * - [x] Art Gallery
+
+Exam solved - [x] Job Ads
