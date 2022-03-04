@@ -35,3 +35,6 @@ Exam preparations solved:
 **Exam: 26/02/2022**
 
 * - [x] Job Ads
+Result  - 81/100, 5.06
+
+[https://softuni.bg/certificates/details/127502/e44fdc16]: # Software University Course - JS Back-End Certificate #
