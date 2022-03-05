@@ -2,7 +2,7 @@
 const router = require('express').Router();
 const { isGuest } = require('../middlewares/guards');
 const { register, login, logout } = require('../services/users');
-const mapErrors = require('../utils/mapper');
+const mapErrors = require('../middlewares/mapper');
 
 
 router.post('/register', isGuest(), async (req, res) => {
