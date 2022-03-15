@@ -17,7 +17,7 @@ The Topics are as they follow:
 * - [x] Validation and Error Handling
 * - [x] Exam Preparation 1
 * - [x] Exam Preparation 2
-* - [ ] Workshop: REST API
+* - [x] Workshop: REST API
 
 Exam preparations solved:
 
